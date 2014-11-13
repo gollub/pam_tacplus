@@ -53,6 +53,10 @@ int tac_acct_read(int fd, struct areply *re) {
 
     r=read(fd, &th, TAC_PLUS_HDR_SIZE);
     if(r < TAC_PLUS_HDR_SIZE) {
+        fprintf(stderr,
+            "%s: short reply header, read %d of %d: %m", __FUNCTION__,
+            r, TAC_PLUS_HDR_SIZE);
+
         TACSYSLOG((LOG_ERR,\
             "%s: short reply header, read %d of %d: %m", __FUNCTION__,\
             r, TAC_PLUS_HDR_SIZE))

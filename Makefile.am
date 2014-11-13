@@ -15,8 +15,8 @@ libtac/include/tacplus.h \
 libtac/include/libtac.h \
 libtac/include/cdefs.h
 
-lib_LTLIBRARIES = libtac.la
-libtac_la_SOURCES = \
+noinst_LIBRARIES = libtac.a
+libtac_a_SOURCES = \
 libtac/lib/acct_r.c \
 libtac/lib/acct_s.c \
 libtac/lib/attrib.c \
@@ -40,18 +40,12 @@ libtac/lib/version.c \
 libtac/lib/xalloc.c \
 libtac/lib/xalloc.h \
 $(libtac_include_HEADERS)
-libtac_la_CFLAGS = $(AM_CFLAGS) -Ilibtac/include
-libtac_la_LDFLAGS = -version-info 1:0:0 -shared
+libtac_a_CFLAGS = $(AM_CFLAGS) -Ilibtac/include
 
-moduledir = @pamdir@
-module_LTLIBRARIES = pam_tacplus.la
-pam_tacplus_la_SOURCES = pam_tacplus.h \
-pam_tacplus.c \
-support.h \
-support.c
-pam_tacplus_la_CFLAGS = $(AM_CFLAGS) -Ilibtac/include
-pam_tacplus_la_LDFLAGS = -module -avoid-version
-pam_tacplus_la_LIBADD = libtac.la
+bin_PROGRAMS = hello-accounting
+hello_accounting_SOURCES = hello-accounting.c support.c
+hello_accounting_CFLAGS = $(AM_CFLAGS) -Ilibtac/include -static
+hello_accounting_LDADD = libtac.a
 
 EXTRA_DIST = pam_tacplus.spec sample.pam libtac.pc.in
 
